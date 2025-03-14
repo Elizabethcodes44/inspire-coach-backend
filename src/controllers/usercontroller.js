@@ -1,4 +1,4 @@
-const UserModel = require("../models/userModel");
+const UserModel = require("../../models/usermodel");
 
 const UserController = {
     getAllUsers: async (req, res) => {
@@ -24,8 +24,15 @@ const UserController = {
 
     createUser: async (req, res) => {
         try {
-            const { name, email, password } = req.body;
-            const newUser = await UserModel.createUser(name, email, password);
+            const { FirstName, LastName, Email, Password, Role } = req.body;
+
+            // Ensure all required fields are provided
+            if (!FirstName || !LastName || !Email || !Password) {
+                return res.status(400).json({ error: "All fields are required" });
+            }
+
+            // Pass role (default to "trainee" if not provided)
+            const newUser = await UserModel.createUser(FirstName, LastName, Email, Password, Role || "trainee");
             res.status(201).json(newUser);
         } catch (error) {
             res.status(500).json({ error: error.message });
