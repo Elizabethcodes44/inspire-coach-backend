@@ -5,11 +5,19 @@ const userRoutes = require("./src/routes/userroute");
 const app = express();
 app.use(express.json());
 
-// Connect to Database
-connectDB();
+async function startServer() {
+  // Connect to Database first
+  await connectDB(); // Ensure this returns a promise
 
-// API Routes
-app.use("/api/users", userRoutes);
+  // Attach routes
+  app.use("/api/users", userRoutes);
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+  // Start server after DB connection
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+}
+
+startServer().catch((err) => {
+  console.error("Failed to start server:", err);
+  process.exit(1);
+});
