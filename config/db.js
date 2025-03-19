@@ -12,13 +12,15 @@ const config = {
     }
 };
 
-async function connectDB() {
-    try {
-        await sql.connect(config);
+// Create a connection pool for better performance
+const poolPromise = new sql.ConnectionPool(config)
+    .connect()
+    .then(pool => {
         console.log("✅ Connected to Azure SQL Database!");
-    } catch (err) {
+        return pool;
+    })
+    .catch(err => {
         console.error("❌ Database connection error:", err);
-    }
-}
+    });
 
-module.exports = { connectDB, sql };
+module.exports = { sql, poolPromise };
