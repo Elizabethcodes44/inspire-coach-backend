@@ -1,10 +1,13 @@
 const express = require("express");
 require("dotenv").config();
+const cors = require("cors"); // Import the cors middleware
 const userRoutes = require("./src/routes/userroute");
 
 const { poolPromise } = require("./config/db"); // Import the database connection pool
 
 const app = express();
+
+app.use(cors()); // Enable CORS
 
 // Ensure DB is connected before starting the server
 poolPromise
