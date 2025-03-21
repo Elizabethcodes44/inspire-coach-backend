@@ -1,7 +1,7 @@
 const { sql, poolPromise } = require("../config/db");
 
 
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 const UserModel = {
   getAllUsers: async () => {
