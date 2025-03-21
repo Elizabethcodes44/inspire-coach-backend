@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const { sql, poolPromise } = require("../../config/db");
 
 
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 const UserController = {
     getAllUsers: async (req, res) => {
